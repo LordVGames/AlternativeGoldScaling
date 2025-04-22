@@ -1,0 +1,3 @@
+# AlternativeGoldScaling
+
+This mod is *partially* a port of the gold drop & multiplayer cost scaling changes from Well-Rounded Balance, which makes the gold scaling not insane past stage 6 which keeps the killing-to-loot part of the game longer (which also inadvertently buffs items that give money). I say partially because while this mod does bring over the exact formulas that WRB uses, some values have been tweaked to better suit vanilla gameplay. This mod also includes some support for Starstorm 2's late-game elites. They drop a shit ton of money and appear very often late-game, so this mod also adds some settings that lets you decrease their gold drops, with all values related to it configurable of course.
