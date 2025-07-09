@@ -1,6 +1,6 @@
 {
 	"name": "AlternativeGoldScaling",
-	"version_number": "1.0.0",
+	"version_number": "1.0.1",
 	"website_url": "https://github.com/LordVGames/AlternativeGoldScaling",
 	"description": "A standalone port of the Well-Rounded Balance mod's gold/cost scaling. Also has some separate config options for Starstorm 2's late-game elites.",
 	"dependencies": [

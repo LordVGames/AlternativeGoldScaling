@@ -32,176 +32,9 @@ namespace AlternativeGoldScaling
             }
 
             [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-            internal static void AddOptions()
+            internal static void SetRiskOfOptionsDescription()
             {
-                //ModSettingsManager.SetModIcon(ModAssets.AssetBundle.LoadAsset<Sprite>("CleanestHudIcon.png"));
                 ModSettingsManager.SetModDescription("A standalone version of the Well-Rounded Balance mod's gold scaling, with some more values now configurable + some mod support.");
-
-                #region WRB Gold Reward Options
-                ModSettingsManager.AddOption(
-                    new CheckBoxOption(
-                        ConfigOptions.EnableWRBGoldScaling,
-                        true
-                    )
-                );
-
-                ModSettingsManager.AddOption(
-                    new FloatFieldOption(
-                        ConfigOptions.BaseGoldScalingMultiplier
-                    )
-                );
-                ModSettingsManager.AddOption(
-                    new FloatFieldOption(
-                        ConfigOptions.LoopMultiplier
-                    )
-                );
-                ModSettingsManager.AddOption(
-                    new FloatFieldOption(
-                        ConfigOptions.StageDivisor
-                    )
-                );
-                ModSettingsManager.AddOption(
-                    new FloatFieldOption(
-                        ConfigOptions.StageClearCountMultiplier
-                    )
-                );
-                ModSettingsManager.AddOption(
-                    new FloatFieldOption(
-                        ConfigOptions.StageMultiplier
-                    )
-                );
-                ModSettingsManager.AddOption(
-                    new FloatFieldOption(
-                        ConfigOptions.SquareRootMultiplier
-                    )
-                );
-                ModSettingsManager.AddOption(
-                    new FloatFieldOption(
-                        ConfigOptions.StageAndLoopMultiplier
-                    )
-                );
-                #endregion
-
-                #region WRB Multiplayer Scaled Cost Options
-                ModSettingsManager.AddOption(
-                    new CheckBoxOption(
-                        ConfigOptions.EnableWRBMultiplayerCostScaling,
-                        true
-                    )
-                );
-
-                ModSettingsManager.AddOption(
-                    new FloatFieldOption(
-                        ConfigOptions.BaseMultiplayerCostMultiplier
-                    )
-                );
-                ModSettingsManager.AddOption(
-                    new FloatFieldOption(
-                        ConfigOptions.PerPlayerCostMultiplier
-                    )
-                );
-                #endregion
-
-                if (Starstorm2.ModIsRunning)
-                {
-                    ModSettingsManager.AddOption(
-                        new CheckBoxOption(
-                            ConfigOptions.EnableSS2Support,
-                            true
-                        )
-                    );
-
-                    if (ConfigOptions.EnableSS2Support.Value)
-                    {
-                        #region Empyrean
-                        ModSettingsManager.AddOption(
-                            new CheckBoxOption(
-                                ConfigOptions.SS2Empyrean_EnableChange,
-                                true
-                            )
-                        );
-
-                        ModSettingsManager.AddOption(
-                            new FloatFieldOption(
-                                ConfigOptions.SS2Empyrean_NerfBaseMultiplier
-                            )
-                        );
-                        ModSettingsManager.AddOption(
-                            new FloatFieldOption(
-                                ConfigOptions.SS2Empyrean_NerfPerStageMultiplier
-                            )
-                        );
-                        ModSettingsManager.AddOption(
-                            new IntFieldOption(
-                                ConfigOptions.SS2Empyrean_StageOfNerfStart
-                            )
-                        );
-                        #endregion
-
-                        if (Starstorm2.IsBetaVersion)
-                        {
-                            #region Ethereal
-                            ModSettingsManager.AddOption(
-                                new CheckBoxOption(
-                                    ConfigOptions.SS2Ethereal_EnableChange,
-                                    true
-                                )
-                            );
-
-                            ModSettingsManager.AddOption(
-                                new FloatFieldOption(
-                                    ConfigOptions.SS2Ethereal_NerfBaseMultiplier
-                                )
-                            );
-                            ModSettingsManager.AddOption(
-                                new FloatFieldOption(
-                                    ConfigOptions.SS2Ethereal_EtherealsUsedMultiplier
-                                )
-                            );
-                            ModSettingsManager.AddOption(
-                                new FloatFieldOption(
-                                    ConfigOptions.SS2Ethereal_NerfPerStageMultiplier
-                                )
-                            );
-                            ModSettingsManager.AddOption(
-                                new IntFieldOption(
-                                    ConfigOptions.SS2Ethereal_StageOfNerfStart
-                                )
-                            );
-                            #endregion
-
-                            #region Ultra
-                            ModSettingsManager.AddOption(
-                                new CheckBoxOption(
-                                    ConfigOptions.SS2Ultra_EnableChange,
-                                    true
-                                )
-                            );
-
-                            ModSettingsManager.AddOption(
-                                new FloatFieldOption(
-                                    ConfigOptions.SS2Ultra_NerfBaseMultiplier
-                                )
-                            );
-                            ModSettingsManager.AddOption(
-                                new FloatFieldOption(
-                                    ConfigOptions.SS2Ultra_EtherealsUsedMultiplier
-                                )
-                            );
-                            ModSettingsManager.AddOption(
-                                new FloatFieldOption(
-                                    ConfigOptions.SS2Ultra_NerfPerStageMultiplier
-                                )
-                            );
-                            ModSettingsManager.AddOption(
-                                new IntFieldOption(
-                                    ConfigOptions.SS2Ultra_StageOfNerfStart
-                                )
-                            );
-                            #endregion
-                        }
-                    }
-                }
             }
         }
 
@@ -221,20 +54,8 @@ namespace AlternativeGoldScaling
             {
                 get
                 {
-                    if (_isBetaVersion != null)
-                    {
-                        return (bool)_isBetaVersion;
-                    }
-
-                    if (BepInEx.Bootstrap.Chainloader.PluginInfos.TryGetValue(SS2Main.GUID, out var pluginInfo))
-                    {
-                        // will probably come back to bite me later but it's the easiest way rn
-                        // and yes the beta's version is one behind the thunderstore's version thankfully
-                        if (pluginInfo.Metadata.Version.ToString() == "0.6.16")
-                        {
-                            _isBetaVersion ??= true;
-                        }
-                    }
+                    // turns out the old code for this did come back to bite me in the ass, so i made it better
+                    _isBetaVersion ??= (BepInEx.Bootstrap.Chainloader.PluginInfos.TryGetValue(SS2Main.GUID, out BepInEx.PluginInfo pluginInfo) && pluginInfo.Metadata.Version.ToString() == "0.6.16");
                     return (bool)_isBetaVersion;
                 }
             }
@@ -249,7 +70,7 @@ namespace AlternativeGoldScaling
             [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
             private static uint GetNewEtherealGoldReward(EtherealEliteType eliteType, uint goldReward)
             {
-                SS2.EtherealBehavior etherealBehavior = SS2.EtherealBehavior.instance;
+                EtherealBehavior etherealBehavior = EtherealBehavior.instance;
                 float baseMultiplier = 0;
                 float etherealsUsedMultiplier = 0;
                 int nerfStartStage = 0;

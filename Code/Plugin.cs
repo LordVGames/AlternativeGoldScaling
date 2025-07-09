@@ -1,7 +1,6 @@
 using System;
 using BepInEx;
 using HarmonyLib;
-using MonoMod.Cil;
 using RoR2;
 
 namespace AlternativeGoldScaling
@@ -14,15 +13,12 @@ namespace AlternativeGoldScaling
         public const string PluginGUID = PluginAuthor + "." + PluginName;
         public const string PluginAuthor = "LordVGames";
         public const string PluginName = "AlternativeGoldScaling";
-        public const string PluginVersion = "1.0.0";
+        public const string PluginVersion = "1.0.2";
         public void Awake()
         {
             Log.Init(Logger);
             ConfigOptions.BindConfigOptions(Config);
-            if (ModSupport.RiskOfOptionsMod.ModIsRunning)
-            {
-                ModSupport.RiskOfOptionsMod.AddOptions();
-            }
+
 
 
             if (ConfigOptions.EnableWRBGoldScaling.Value)
@@ -35,25 +31,22 @@ namespace AlternativeGoldScaling
             }
 
 
-            if (ConfigOptions.EnableSS2Support.Value && ModSupport.Starstorm2.ModIsRunning)
-            {
-                Harmony harmony = new(PluginGUID);
 
+            if (!ModSupport.Starstorm2.ModIsRunning || !ConfigOptions.EnableSS2Support.Value)
+            {
+                return;
+            }
+            Harmony harmony = new(PluginGUID);
+
+            if (ModSupport.Starstorm2.IsBetaVersion)
+            {
+                Log.Warning("Version number detected is the same as the beta's version! If errors happen while trying to patch, either this mod is broken/outdated or you may have to update your version of Starstorm 2!");
 
                 if (ConfigOptions.SS2Empyrean_EnableChange.Value)
                 {
-                    Log.Info("Patching SS2's empyrean gold reward...");
-                    if (ModSupport.Starstorm2.IsBetaVersion)
-                    {
-                        Log.Warning("Version number detected is the same as the beta's version! If this still errors out, either this mod is broken or you may have to update your version of Starstorm 2!");
-                        harmony.CreateClassProcessor(typeof(ModSupport.Starstorm2.EmpyreanGoldReward_Beta)).Patch();
-                    }
-                    else
-                    {
-                        harmony.CreateClassProcessor(typeof(ModSupport.Starstorm2.EmpyreanGoldReward)).Patch();
-                    }
+                    Log.Info("Patching SS2 beta's empyrean gold reward...");
+                    harmony.CreateClassProcessor(typeof(ModSupport.Starstorm2.EmpyreanGoldReward_Beta)).Patch();
                 }
-
 
                 if (ConfigOptions.SS2Ethereal_EnableChange.Value)
                 {
@@ -61,12 +54,16 @@ namespace AlternativeGoldScaling
                     harmony.CreateClassProcessor(typeof(ModSupport.Starstorm2.EtherealGoldReward)).Patch();
                 }
 
-
                 if (ConfigOptions.SS2Ultra_EnableChange.Value)
                 {
                     Log.Info("Patching SS2 beta's ultra gold reward...");
                     harmony.CreateClassProcessor(typeof(ModSupport.Starstorm2.UltraGoldReward)).Patch();
                 }
+            }
+            else if (ConfigOptions.SS2Empyrean_EnableChange.Value)
+            {
+                Log.Info("Patching SS2's empyrean gold reward...");
+                harmony.CreateClassProcessor(typeof(ModSupport.Starstorm2.EmpyreanGoldReward)).Patch();
             }
         }
     }
