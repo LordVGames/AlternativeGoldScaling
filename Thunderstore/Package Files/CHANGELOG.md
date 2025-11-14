@@ -1,3 +1,8 @@
+## 1.0.3
+
+- Fixed for SS2 0.6.25
+- - The hooks for starstorm's elite support were changed a little bit so the money amounts from them may or may not be different from the previous version of this mod
+
 ## 1.0.2
 
 - Fixed SS2 beta check causing problems

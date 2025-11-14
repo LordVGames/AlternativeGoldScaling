@@ -206,7 +206,7 @@ namespace AlternativeGoldScaling
             SS2Ethereal_EnableChange = config.BindOption(
                 _ss2EtherealSectionName,
                 "Enable Ethereal Gold Reward Change",
-                "THIS IS FOR THE BETA VERSION OF SS2",
+                "",
                 false,
                 Extensions.ConfigFlags.RestartRequired
             );
@@ -242,7 +242,7 @@ namespace AlternativeGoldScaling
             SS2Ultra_EnableChange = config.BindOption(
                 _ss2UltraSectionName,
                 "Enable Ultra Gold Reward Change",
-                "THIS IS FOR THE BETA VERSION OF SS2",
+                "",
                 false,
                 Extensions.ConfigFlags.RestartRequired
             );
