@@ -22,5 +22,16 @@ namespace AlternativeGoldScaling
         internal static void Info(object data) => _logSource.LogInfo(data);
         internal static void Message(object data) => _logSource.LogMessage(data);
         internal static void Warning(object data) => _logSource.LogWarning(data);
+
+
+        internal static void BeforeAndAfter(object data)
+        {
+            if (ConfigOptions.EnableLoggingMoneyChange == null || !ConfigOptions.EnableLoggingMoneyChange.Value)
+            {
+                return;
+            }
+
+            _logSource.LogInfo(data);
+        }
     }
 }

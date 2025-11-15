@@ -40,7 +40,9 @@ namespace AlternativeGoldScaling
 
             private static void SetWRBGoldReward(DeathRewards self, ref DamageReport damageReport)
             {
+                Log.BeforeAndAfter($"Before WRB Gold Reward: {self.goldReward}");
                 self.goldReward = GetWRBGoldReward(self.goldReward);
+                Log.BeforeAndAfter($"After WRB Gold Reward: {self.goldReward}");
             }
             internal static uint GetWRBGoldReward(uint goldReward)
             {

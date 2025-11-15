@@ -76,7 +76,10 @@ namespace AlternativeGoldScaling
                     int nerfStartStage = ConfigOptions.SS2Empyrean_StageOfNerfStart.Value;
                     float perStageMultiplier = ConfigOptions.SS2Empyrean_NerfPerStageMultiplier.Value;
 
-                    return deathRewards.goldReward *= Convert.ToUInt32(MathF.Max(1, baseMultiplier / (1 + (MathF.Max(0, (MainChanges.CurrentStageNumber - nerfStartStage) * perStageMultiplier)))));
+                    Log.BeforeAndAfter($"Before New Empyrean Gold Reward: {deathRewards.goldReward}");
+                    deathRewards.goldReward *= Convert.ToUInt32(MathF.Max(1, baseMultiplier / (1 + (MathF.Max(0, (MainChanges.CurrentStageNumber - nerfStartStage) * perStageMultiplier)))));
+                    Log.BeforeAndAfter($"After New Empyrean Gold Reward: {deathRewards.goldReward}");
+                    return deathRewards.goldReward;
                 }
             }
 
@@ -116,7 +119,10 @@ namespace AlternativeGoldScaling
                     int nerfStartStage = ConfigOptions.SS2Ethereal_StageOfNerfStart.Value;
                     float perStageMultiplier = ConfigOptions.SS2Ethereal_NerfPerStageMultiplier.Value;
 
-                    return deathRewards.goldReward *= Convert.ToUInt32(MathF.Max(1, (baseMultiplier + (etherealsUsedMultiplier * etherealBehavior.etherealsCompleted)) / (1 + (MathF.Max(0, (MainChanges.CurrentStageNumber - nerfStartStage) * perStageMultiplier)))));
+                    Log.BeforeAndAfter($"Before New Ethereal Gold Reward: {deathRewards.goldReward}");
+                    deathRewards.goldReward *= Convert.ToUInt32(MathF.Max(1, (baseMultiplier + (etherealsUsedMultiplier * etherealBehavior.etherealsCompleted)) / (1 + (MathF.Max(0, (MainChanges.CurrentStageNumber - nerfStartStage) * perStageMultiplier)))));
+                    Log.BeforeAndAfter($"After New Ethereal Gold Reward: {deathRewards.goldReward}");
+                    return deathRewards.goldReward;
                 }
             }
 
@@ -156,7 +162,10 @@ namespace AlternativeGoldScaling
                     int nerfStartStage = ConfigOptions.SS2Ultra_StageOfNerfStart.Value;
                     float perStageMultiplier = ConfigOptions.SS2Ultra_NerfPerStageMultiplier.Value;
 
-                    return deathRewards.goldReward *= Convert.ToUInt32(MathF.Max(1, (baseMultiplier + (etherealsUsedMultiplier * etherealBehavior.etherealsCompleted)) / (1 + (MathF.Max(0, (MainChanges.CurrentStageNumber - nerfStartStage) * perStageMultiplier)))));
+                    Log.BeforeAndAfter($"Before New Ultra Gold Reward: {deathRewards.goldReward}");
+                    deathRewards.goldReward *= Convert.ToUInt32(MathF.Max(1, (baseMultiplier + (etherealsUsedMultiplier * etherealBehavior.etherealsCompleted)) / (1 + (MathF.Max(0, (MainChanges.CurrentStageNumber - nerfStartStage) * perStageMultiplier)))));
+                    Log.BeforeAndAfter($"After New Ultra Gold Reward: {deathRewards.goldReward}");
+                    return deathRewards.goldReward;
                 }
             }
         }

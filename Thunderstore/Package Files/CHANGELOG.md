@@ -1,3 +1,7 @@
+## 1.0.4
+
+- Added config option to enable logging of the before and after of money drops to help tune config values
+
 ## 1.0.3
 
 - Fixed for SS2 0.6.25

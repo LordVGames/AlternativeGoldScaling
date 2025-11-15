@@ -8,6 +8,8 @@ namespace AlternativeGoldScaling
 {
     public static class ConfigOptions
     {
+        internal static ConfigEntry<bool> EnableLoggingMoneyChange;
+
         #region WRB Gold Reward Options
         private const string _wrbGoldRewardSectionName = "WRB - Enemy gold reward scaling";
         public static ConfigEntry<bool> EnableWRBGoldScaling;
@@ -60,6 +62,13 @@ namespace AlternativeGoldScaling
             {
                 ModSupport.RiskOfOptionsMod.SetRiskOfOptionsDescription();
             }
+
+            EnableLoggingMoneyChange = config.BindOption(
+                "Other",
+                "Log before and after of money gained",
+                "This is to help tune your formula values.",
+                false
+            );
 
             BindWRBGoldRewardOptions(config);
             BindWRBMultiplayerGoldScalingOptions(config);
